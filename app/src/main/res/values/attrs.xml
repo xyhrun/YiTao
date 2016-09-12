@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyToolBar">
+        <attr name="leftButton" format="reference" />
+        <attr name="rightButton" format="reference" />
+        <attr name="isShowSearchView" format="reference|boolean" />
+        <attr name="editTextHint" format="reference|string"/>
+        <attr name="editBackground" format="reference"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="BannerLayoutStyle">
+        <attr name="autoPlayDuration" format="integer|reference" />
+        <attr name="scrollDuration" format="integer|reference" />
+        <attr name="isAutoPlay" format="boolean"/>
+        <attr name="defaultImage" format="integer|reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="IndicatorLayout">
+
+        <attr name="selectedIndicatorColor" format="color|reference" />
+        <attr name="unSelectedIndicatorColor" format="color|reference" />
+        <attr name="indicatorShape" format="enum">
+            <enum name="rect" value="0" />
+            <enum name="oval" value="1" />
+        </attr>
+
+        <attr name="selectedIndicatorHeight" format="dimension|reference" />
+        <attr name="selectedIndicatorWidth" format="dimension|reference" />
+
+        <attr name="unSelectedIndicatorHeight" format="dimension|reference" />
+        <attr name="unSelectedIndicatorWidth" format="dimension|reference" />
+
+        <attr name="indicatorSpace" format="dimension|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundImageView">
+        <attr name="riv_borderWidth" format="reference|dimension">
+        </attr>
+        <attr name="riv_borderRadius" format="reference|dimension">
+        </attr>
+        <attr name="riv_borderColor" format="reference|color">
+        </attr>
+        <attr name="riv_hoverColor" format="reference|color">
+        </attr>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:background="@color/oftenYellow"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/homepage_erweima"
+            android:layout_width="26dp"
+            android:layout_height="26dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="扫一扫"/>
+    </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/homepage_back"
+        android:layout_alignParentLeft="true"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:visibility="gone"
+        android:layout_centerVertical="true" />
+
+    <TextView android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_centerInParent="true"/>
+
+    <ImageButton
+        android:id="@+id/homepage_add"
+        android:layout_alignParentRight="true"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:visibility="gone"
+        android:layout_centerVertical="true" />
+
+    <EditText
+        android:id="@+id/homepage_search"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/homepage_message"
+            android:layout_width="26dp"
+            android:layout_height="26dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="消息"/>
+    </LinearLayout>
+</RelativeLayout>
