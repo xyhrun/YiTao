@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.xyh.shoppingdemo.R;
-import com.example.xyh.shoppingdemo.homepage.adapter.CampaignItemClickListener;
 import com.example.xyh.shoppingdemo.homepage.adapter.HeaderAndFooterAdapter;
 import com.example.xyh.shoppingdemo.homepage.adapter.MyRecyclerAdapter;
 import com.example.xyh.shoppingdemo.homepage.model.BannerBean;
@@ -40,7 +38,7 @@ import okhttp3.Request;
 /**
  * Created by xyh on 2016/9/8.
  */
-public class HomePageFragment extends Fragment implements BannerLayout.OnBannerChangeListener, View.OnTouchListener, CampaignItemClickListener, IFragmentView {
+public class HomePageFragment extends Fragment implements IFragmentView, View.OnTouchListener, BannerLayout.OnBannerChangeListener {
     @Bind(R.id.homepage_toolbar)
     MyToolBar mMyToolbar;
     @Bind(R.id.homepage_recyclerView)
@@ -48,7 +46,6 @@ public class HomePageFragment extends Fragment implements BannerLayout.OnBannerC
     @Bind(R.id.homepage_search)
     EditText mSearch;
 
-    private List<BannerBean> mBannerBeanList;
     private View bannerView;
     //广告轮播的图片链接和标题
     private List<String> imgUrls;
@@ -63,7 +60,6 @@ public class HomePageFragment extends Fragment implements BannerLayout.OnBannerC
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.from(container.getContext()).inflate(R.layout.fragment_homepage, container, false);
-        Log.i(TAG, "onCreateView: view = " + view);
         ButterKnife.bind(this, view);
         mSearch.setOnTouchListener(this);
         initView();
@@ -72,7 +68,7 @@ public class HomePageFragment extends Fragment implements BannerLayout.OnBannerC
     }
 
     private void recyclerViewData() {
-        OkHttpClientManager.getAsyn(Api.COMPAIGN_URL, new OkHttpClientManager.ResultCallback<List<CampaignBean>>() {
+        OkHttpClientManager.getAsyn(Api.CAMPAIGN_URL, new OkHttpClientManager.ResultCallback<List<CampaignBean>>() {
             @Override
             public void onError(Request mRequest, Exception e) {
                 e.printStackTrace();
@@ -80,9 +76,8 @@ public class HomePageFragment extends Fragment implements BannerLayout.OnBannerC
 
             @Override
             public void onResponse(List<CampaignBean> response) {
-                Log.i(TAG, "onResponse: response.get(0).getTitle" + response.get(0).getTitle());
+//                Log.i(TAG, "onResponse: response.get(0).getTitle" + response.get(0).getTitle());
                 mMyRecyclerAdapter = new MyRecyclerAdapter(response, getActivity());
-                mMyRecyclerAdapter.setCampaignItemClickListener(HomePageFragment.this);
                 //不设置LayoutManager什么都显示不出来
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                 mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -91,13 +86,11 @@ public class HomePageFragment extends Fragment implements BannerLayout.OnBannerC
                 //添加广告
                 addBannerHeader(headerAndFooterAdapter);
             }
-
         });
     }
 
 
     private void initView() {
-
         bannerView = LayoutInflater.from(getActivity()).inflate(R.layout.homepage_banner_container, null);
         mBannerLayout = (BannerLayout) bannerView.findViewById(R.id.homepage_banner);
         mIndicatorLayout = (IndicatorLayout) bannerView.findViewById(R.id.homepage_indicator_layout);
@@ -127,7 +120,6 @@ public class HomePageFragment extends Fragment implements BannerLayout.OnBannerC
                 recyclerViewData();
             }
         });
-
     }
 
     private void addBannerHeader(HeaderAndFooterAdapter headerAndFooterAdapter) {
@@ -138,7 +130,7 @@ public class HomePageFragment extends Fragment implements BannerLayout.OnBannerC
     private void initBannerData(List<BannerBean> mBannerBeanList) {
         imgUrls = new ArrayList<>();
         titles = new ArrayList<>();
-        Log.i(TAG, "initBannerData: bannerBeanList = " + mBannerBeanList.size());
+//        Log.i(TAG, "initBannerData: bannerBeanList = " + mBannerBeanList.size());
         for (BannerBean bannerBean : mBannerBeanList) {
             imgUrls.add(bannerBean.getImgUrl());
             titles.add(bannerBean.getName());
@@ -146,14 +138,10 @@ public class HomePageFragment extends Fragment implements BannerLayout.OnBannerC
     }
 
     @Override
-    public void onBannerScrolled(int position) {
-        mBannerTitle.setText(titles.get(position));
+    public void onCampaignClickListener(View view, int position, CampaignBean.Bean bean) {
+        MyToast.showToast(bean.getTitle());
     }
 
-    @Override
-    public void onItemClick(int position) {
-        MyToast.showToast("点击第" + (position + 1) + "项");
-    }
 
     //点击别处软键盘关闭
     @Override
@@ -167,17 +155,12 @@ public class HomePageFragment extends Fragment implements BannerLayout.OnBannerC
     }
 
     @Override
-    public void onClickListener(View view, int position, CampaignBean.Bean bean) {
-        MyToast.showToast(bean.getTitle());
+    public void onBannerScrolled(int position) {
+        mBannerTitle.setText(titles.get(position));
     }
 
     @Override
-    public void onBannerClickListener() {
-
-    }
-
-    @Override
-    public void onCampaignClickListener() {
-
+    public void onItemClick(int position) {
+        MyToast.showToast("点击第" + (position + 1) + "项");
     }
 }

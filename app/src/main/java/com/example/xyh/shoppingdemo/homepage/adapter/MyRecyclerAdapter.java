@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.xyh.shoppingdemo.R;
 import com.example.xyh.shoppingdemo.homepage.model.CampaignBean;
+import com.example.xyh.shoppingdemo.homepage.presenter.HomepagePresenter;
 
 import java.util.List;
 
@@ -25,15 +26,13 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     private static final int RIGHT_VIEW = 1;
     private List<CampaignBean> mCampaignBeanList;
     private Context mContext;
-    private CampaignItemClickListener mCampaignItemClickListener;
+    private HomepagePresenter mHomepagePresenter;
 
-    public void setCampaignItemClickListener(CampaignItemClickListener mNormalItemClickListener) {
-        this.mCampaignItemClickListener = mNormalItemClickListener;
-    }
 
     public MyRecyclerAdapter(List<CampaignBean> mCampaignBeanList, Context mContext) {
         this.mCampaignBeanList = mCampaignBeanList;
         this.mContext = mContext;
+        mHomepagePresenter = new HomepagePresenter(mContext);
     }
 
     @Override
@@ -104,16 +103,15 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
             int position = getLayoutPosition();
             //减去头部
             CampaignBean campaignBean = mCampaignBeanList.get(position - 1);
-            if (mCampaignItemClickListener != null) {
                 switch (v.getId()) {
                     case R.id.homepage_campaign_bigImg:
-                        mCampaignItemClickListener.onClickListener(v, position, campaignBean.getCpOne());
+                        mHomepagePresenter.onClickListener(v, position, campaignBean.getCpOne());
                         break;
                     case R.id.homepage_campaign_top_smallImg:
-                        mCampaignItemClickListener.onClickListener(v, position, campaignBean.getCpTwo());
+                        mHomepagePresenter.onClickListener(v, position, campaignBean.getCpTwo());
                         break;
                     case R.id.homepage_campaign_bottom_smallImg:
-                        mCampaignItemClickListener.onClickListener(v, position, campaignBean.getCpThree());
+                        mHomepagePresenter.onClickListener(v, position, campaignBean.getCpThree());
                         break;
                     default:
                         break;
@@ -122,4 +120,4 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
 
         }
     }
-}
+

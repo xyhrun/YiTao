@@ -9,9 +9,8 @@
     <com.example.xyh.shoppingdemo.widget.MyToolBar
         android:id="@+id/homepage_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:background="@color/oftenYellow"
-        android:minHeight="?attr/actionBarSize"
         app:titleTextColor="@color/white"
         app:leftButton="@mipmap/toolbar_back"
         app:isShowSearchView="true"

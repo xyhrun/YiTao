@@ -15,9 +15,9 @@ import com.example.xyh.shoppingdemo.R;
 import com.example.xyh.shoppingdemo.homepage.adapter.ViewPagerAdapter;
 import com.example.xyh.shoppingdemo.fragment.AccountFragment;
 import com.example.xyh.shoppingdemo.fragment.CartFragment;
-import com.example.xyh.shoppingdemo.fragment.DiscoverFragment;
+import com.example.xyh.shoppingdemo.category.CategoryFragment;
 import com.example.xyh.shoppingdemo.homepage.fragment.HomePageFragment;
-import com.example.xyh.shoppingdemo.fragment.TfaccountFragment;
+import com.example.xyh.shoppingdemo.tfaccount.TfaccountFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,21 +33,22 @@ public class MainActivity extends AppCompatActivity {
     FragmentTabHost mFragmentTabHost;
 
     private int[] images = {R.drawable.selector_guide_homepage, R.drawable.selector_guide_tfaccount,
-            R.drawable.selector_guide_discover, R.drawable.selector_guide_cart, R.drawable.selector_guide_account};
+            R.drawable.selector_guide_category, R.drawable.selector_guide_cart, R.drawable.selector_guide_account};
 
-    private String[] titles = {"首页", "微淘", "社区", "购物车", "我的淘宝"};
+    private String[] titles = {"首页", "微淘", "分类", "购物车", "我的淘宝"};
     private List<Fragment> fragmentList;
     private ViewPagerAdapter mViewPagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mViewPager.setOffscreenPageLimit(4);
         initData();
         setRelate();
 
     }
-
 
 
     private void setRelate() {
@@ -80,16 +81,16 @@ public class MainActivity extends AppCompatActivity {
         fragmentList = new ArrayList<>();
         HomePageFragment homePageFragment = new HomePageFragment();
         TfaccountFragment tfaccountFragment = new TfaccountFragment();
-        DiscoverFragment discoverFragment = new DiscoverFragment();
+        CategoryFragment categoryFragment = new CategoryFragment();
         CartFragment cartFragment = new CartFragment();
         AccountFragment accountFragment = new AccountFragment();
         fragmentList.add(homePageFragment);
         fragmentList.add(tfaccountFragment);
-        fragmentList.add(discoverFragment);
+        fragmentList.add(categoryFragment);
         fragmentList.add(cartFragment);
         fragmentList.add(accountFragment);
 
-        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),fragmentList);
+        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragmentList);
 
         mFragmentTabHost.setup(this, getSupportFragmentManager(), R.id.main_viewPager);
         for (int i = 0; i < titles.length; i++) {

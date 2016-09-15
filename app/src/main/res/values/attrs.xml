@@ -6,6 +6,7 @@
         <attr name="isShowSearchView" format="reference|boolean" />
         <attr name="editTextHint" format="reference|string"/>
         <attr name="editBackground" format="reference"/>
+        <attr name="titleTextSize" format="reference|integer"/>
     </declare-styleable>
 
 

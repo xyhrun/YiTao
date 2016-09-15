@@ -20,6 +20,8 @@ import com.example.xyh.shoppingdemo.R;
 /**
  * Created by xyh on 2016/9/10.
  */
+
+//写个titleSize
 public class MyToolBar extends Toolbar {
     private static final String TAG = "MyToolBar";
 
@@ -31,6 +33,7 @@ public class MyToolBar extends Toolbar {
     private ImageButton mAdd;
     private TextView mTitle;
     private EditText mSearchInput;
+    private int titleTextSize = 20;
 
     public MyToolBar(Context context) {
         this(context, null);
@@ -52,6 +55,7 @@ public class MyToolBar extends Toolbar {
             boolean isShowSearchView = ta.getBoolean(R.styleable.MyToolBar_isShowSearchView, false);
             String editTextHint = ta.getString(R.styleable.MyToolBar_editTextHint);
             Drawable editTextBackground = ta.getDrawable(R.styleable.MyToolBar_editBackground);
+//            titleTextSize = ta.getInt(R.styleable.MyToolBar_titleTextSize, 16);
             setLeftIcon(leftButton);
             setRightIcon(rightButton);
             setEditTextBackground(isShowSearchView, editTextBackground);
@@ -126,6 +130,7 @@ public class MyToolBar extends Toolbar {
         Log.i(TAG, "setTitle: 执行了吗");
         initView();
         mTitle.setText(title);
+        mTitle.setTextSize(20);
         showTitleView();
 
     }

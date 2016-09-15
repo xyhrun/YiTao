@@ -244,7 +244,7 @@ public class OkHttpClientManager {
                 FileOutputStream fos = null;
                 byte[] bytes = new byte[2048];
                 try {
-                    Log.i(TAG, "onResponse: response.body().byteStream() = "+response.body().byteStream());
+//                    Log.i(TAG, "onResponse: response.body().byteStream() = "+response.body().byteStream());
                     is = response.body().byteStream();
                     //file有问题
                     File file = new File(destFileDir, getFileName(url));
@@ -403,13 +403,11 @@ public class OkHttpClientManager {
             public void onResponse(Call call, Response response) {
                 try {
                     String result = response.body().string();
-                    Log.i(TAG, "onResponse: "+result);
                     if (resultCallback.mType == result.getClass()) {
-                        Log.i(TAG, "onResponse: 是String类型");
                         sendSuccessResultCallback(result, resultCallback);
                     } else {
                         Object object = mGson.fromJson(result, resultCallback.mType);
-                        Log.i(TAG, "onResponse:传入类型 "+resultCallback.mType);
+                        Log.i(TAG, "onResponse:传入类型 " + resultCallback.mType);
                         sendSuccessResultCallback(object, resultCallback);
                     }
                 } catch (IOException e) {
@@ -460,7 +458,7 @@ public class OkHttpClientManager {
         mDeliver.post(new Runnable() {
             @Override
             public void run() {
-                Log.i(TAG, "run: object = "+object);
+                Log.i(TAG, "run: object = " + object);
                 if (callback != null) {
                     callback.onResponse(object);
                 }
@@ -517,7 +515,7 @@ public class OkHttpClientManager {
 
     /**
      * 对外暴露的方法
-     * */
+     */
 
     //同步get,返回Response
     public static Response getAsResponse(String url) throws IOException {
@@ -554,45 +552,45 @@ public class OkHttpClientManager {
         getOkHttpManagerInstance()._postAsyn(url, resultCallback, params);
     }
 
-    //同步多文件上传
-    public static Response postUploadAsResponse(String url, File[] files, String[] fileKeys, Param... params) throws IOException {
-        return getOkHttpManagerInstance()._postUploadAsResponse(url, files, fileKeys, params);
-    }
-
-    //同步单文件上传
-    public static Response postUploadAsResponse(String url, File file, String[] fileKeys, Param... params) throws IOException {
-        return getOkHttpManagerInstance()._postUploadAsResponse(url, new File[]{file}, fileKeys, params);
-    }
-
-    //同步多文件上传不带参数
-    public static Response postUploadAsResponse(String url, File[] files, String[] fileKeys) throws IOException {
-        return getOkHttpManagerInstance()._postUploadAsResponse(url, files, fileKeys, null);
-    }
-
-    //同步单文件上传不带参数
-    public static Response postUploadAsResponse(String url, File file, String[] fileKeys) throws IOException {
-        return getOkHttpManagerInstance()._postUploadAsResponse(url, new File[]{file}, fileKeys, null);
-    }
-
-    //异步多文件上传
-    public static void postAsynUpload(ResultCallback resultCallback, String url, File[] files, String[] fileKeys, Param... params) {
-        getOkHttpManagerInstance()._postAsynUpload(resultCallback, url, files, fileKeys, params);
-    }
-
-    //异步单文件上传
-    public static void postAsynUpload(ResultCallback resultCallback, String url, File file, String[] fileKeys, Param... params) {
-        getOkHttpManagerInstance()._postAsynUpload(resultCallback, url, new File[]{file}, fileKeys, params);
-    }
-
-    //异步多文件上传不带参数
-    public static void postAsynUpload(ResultCallback resultCallback, String url, File[] files, String[] fileKeys) {
-        getOkHttpManagerInstance()._postAsynUpload(resultCallback, url, files, fileKeys, null);
-    }
-
-    //异步单文件上传不带参数
-    public static void postAsynUpload(ResultCallback resultCallback, String url, File file, String[] fileKeys) {
-        getOkHttpManagerInstance()._postAsynUpload(resultCallback, url, new File[]{file}, fileKeys, null);
-    }
+//    //同步多文件上传
+//    public static Response postUploadAsResponse(String url, File[] files, String[] fileKeys, Param... params) throws IOException {
+//        return getOkHttpManagerInstance()._postUploadAsResponse(url, files, fileKeys, params);
+//    }
+//
+//    //同步单文件上传
+//    public static Response postUploadAsResponse(String url, File file, String[] fileKeys, Param... params) throws IOException {
+//        return getOkHttpManagerInstance()._postUploadAsResponse(url, new File[]{file}, fileKeys, params);
+//    }
+//
+//    //同步多文件上传不带参数
+//    public static Response postUploadAsResponse(String url, File[] files, String[] fileKeys) throws IOException {
+//        return getOkHttpManagerInstance()._postUploadAsResponse(url, files, fileKeys, null);
+//    }
+//
+//    //同步单文件上传不带参数
+//    public static Response postUploadAsResponse(String url, File file, String[] fileKeys) throws IOException {
+//        return getOkHttpManagerInstance()._postUploadAsResponse(url, new File[]{file}, fileKeys, null);
+//    }
+//
+//    //异步多文件上传
+//    public static void postAsynUpload(ResultCallback resultCallback, String url, File[] files, String[] fileKeys, Param... params) {
+//        getOkHttpManagerInstance()._postAsynUpload(resultCallback, url, files, fileKeys, params);
+//    }
+//
+//    //异步单文件上传
+//    public static void postAsynUpload(ResultCallback resultCallback, String url, File file, String[] fileKeys, Param... params) {
+//        getOkHttpManagerInstance()._postAsynUpload(resultCallback, url, new File[]{file}, fileKeys, params);
+//    }
+//
+//    //异步多文件上传不带参数
+//    public static void postAsynUpload(ResultCallback resultCallback, String url, File[] files, String[] fileKeys) {
+//        getOkHttpManagerInstance()._postAsynUpload(resultCallback, url, files, fileKeys, null);
+//    }
+//
+//    //异步单文件上传不带参数
+//    public static void postAsynUpload(ResultCallback resultCallback, String url, File file, String[] fileKeys) {
+//        getOkHttpManagerInstance()._postAsynUpload(resultCallback, url, new File[]{file}, fileKeys, null);
+//    }
 
     //异步get下载
     public static void downLoadAsyn(final String url, final String destFileDir, final ResultCallback resultCallback) {

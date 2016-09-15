@@ -1,4 +1,4 @@
-package com.example.xyh.shoppingdemo.util;
+package com.example.xyh.shoppingdemo.base;
 
 import android.app.Application;
 

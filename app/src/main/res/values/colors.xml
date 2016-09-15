@@ -12,4 +12,10 @@
     <color name="transparent">#00000000</color>
     <color name="divider">#eae3e3</color>
     <color name="background">#E3E3E3</color>
+    <color name="red">#ff0000</color>
+    <!--覆盖颜色-->
+    <color name="color_plieon">#1f000000</color>
+    <color name="darkgray">#a9a9a9</color>
+    <!--雪白色-->
+    <color name="floralwhite">#fffaf0</color>
 </resources>

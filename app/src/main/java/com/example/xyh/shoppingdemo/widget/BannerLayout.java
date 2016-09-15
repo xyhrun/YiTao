@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -235,7 +234,7 @@ public class BannerLayout extends RelativeLayout {
         stopAutoPlay(); // 避免重复消息
         if (isAutoPlay) {
             switchIndicator(getCurrentItem()  % itemCount);
-            Log.i(TAG, "startAutoPlay: 当前位置"+getCurrentItem());
+//            Log.i(TAG, "startAutoPlay: 当前位置"+getCurrentItem());
             if (onBannerChangeListener != null)
                 onBannerChangeListener.onBannerScrolled(getCurrentItem() % itemCount);
             handler.sendEmptyMessageDelayed(WHAT_AUTO_PLAY, autoPlayDuration);
@@ -289,8 +288,6 @@ public class BannerLayout extends RelativeLayout {
     public void setOnBannerChangeListener(OnBannerChangeListener onBannerChangeListener) {
         this.onBannerChangeListener = onBannerChangeListener;
     }
-
-
 
     public interface OnBannerChangeListener {
         void onBannerScrolled(int position);

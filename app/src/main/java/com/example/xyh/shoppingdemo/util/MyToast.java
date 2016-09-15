@@ -2,6 +2,8 @@ package com.example.xyh.shoppingdemo.util;
 
 import android.widget.Toast;
 
+import com.example.xyh.shoppingdemo.base.MyApplication;
+
 /**
  * Created by xyh on 2016/9/10.
  */
