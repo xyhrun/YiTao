@@ -4,35 +4,42 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/selector_category_right_item"
+    android:clickable="true"
     app:contentPadding="5dp"
     android:layout_marginRight="3dp"
     android:layout_marginLeft="3dp"
     app:cardCornerRadius="3dp"
     app:cardElevation="1dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/category_truckImage"
+            android:layout_alignParentTop="true"
             android:layout_width="80dp"
             android:layout_height="60dp" />
 
 
         <TextView
             android:id="@+id/category_truckName"
+            android:layout_below="@+id/category_truckImage"
+            android:paddingTop="3dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:maxLines="3"
             android:textSize="14sp"></TextView>
 
         <LinearLayout
             android:id="@+id/category_truckPriceInfo"
+            android:layout_below="@+id/category_truckName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_alignParentBottom="true"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:orientation="horizontal">
 
             <TextView
@@ -53,5 +60,5 @@
         </LinearLayout>
 
 
-    </LinearLayout>
+    </RelativeLayout>
 </android.support.v7.widget.CardView>

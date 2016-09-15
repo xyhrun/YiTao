@@ -1,9 +1,11 @@
 package com.example.xyh.shoppingdemo.category.model;
 
+import java.io.Serializable;
+
 /**
  * Created by xyh on 2016/9/14.
  */
-public class CategoryTruckBean {
+public class CategoryTruckBean implements Serializable{
 
     /**
      * id : 12

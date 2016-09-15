@@ -29,8 +29,8 @@ public class MyToolBar extends Toolbar {
     private LayoutInflater mLayoutInflater;
     private ImageButton mErWeiMa;
     private ImageButton mMessage;
-    private ImageButton mBack;
-    private ImageButton mAdd;
+    private ImageButton mLeftBtn;
+    private ImageButton mRightBtn;
     private TextView mTitle;
     private EditText mSearchInput;
     private int titleTextSize = 20;
@@ -81,25 +81,25 @@ public class MyToolBar extends Toolbar {
     }
 
     public void setLeftIconClickListener(OnClickListener listener) {
-        mBack.setOnClickListener(listener);
+        mLeftBtn.setOnClickListener(listener);
     }
 
     public void setRightIconClickListener(OnClickListener listener) {
-        mAdd.setOnClickListener(listener);
+        mRightBtn.setOnClickListener(listener);
     }
 
     private void setRightIcon(Drawable rightButton) {
         if (rightButton != null) {
-            mAdd.setBackground(rightButton);
-            mAdd.setVisibility(VISIBLE);
+            mRightBtn.setBackground(rightButton);
+            mRightBtn.setVisibility(VISIBLE);
         }
     }
 
     private void setLeftIcon(Drawable leftButton) {
         if (leftButton != null) {
             //设置setImageDrawable图片后面会有灰色的块
-            mBack.setBackground(leftButton);
-            mBack.setVisibility(VISIBLE);
+            mLeftBtn.setBackground(leftButton);
+            mLeftBtn.setVisibility(VISIBLE);
         }
     }
 
@@ -113,8 +113,8 @@ public class MyToolBar extends Toolbar {
             mSearchInput = (EditText) mView.findViewById(R.id.homepage_search);
             mMessage = (ImageButton) mView.findViewById(R.id.homepage_message);
             mTitle = (TextView) mView.findViewById(R.id.toolbar_title);
-            mBack = (ImageButton) mView.findViewById(R.id.homepage_back);
-            mAdd = (ImageButton) mView.findViewById(R.id.homepage_add);
+            mLeftBtn = (ImageButton) mView.findViewById(R.id.homepage_leftIcon);
+            mRightBtn = (ImageButton) mView.findViewById(R.id.homepage_rightIcon);
             LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             addView(mView, lp);
         }

@@ -1,5 +1,6 @@
 package com.example.xyh.shoppingdemo.category;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.example.xyh.shoppingdemo.R;
 import com.example.xyh.shoppingdemo.base.BaseAdapter;
+import com.example.xyh.shoppingdemo.category.activity.TruckDetailActivity;
 import com.example.xyh.shoppingdemo.category.adapter.CategoryAdapter;
 import com.example.xyh.shoppingdemo.category.adapter.CategoryTruckAdapter;
 import com.example.xyh.shoppingdemo.category.model.CategoryBean;
@@ -66,11 +68,10 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.from(container.getContext()).inflate(R.layout.fragment_category, container, false);
         ButterKnife.bind(this, view);
-        mRightRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        initCategoryData();
         //重复设置分割线， 会导致Item越来越小
         mRightRecyclerView.addItemDecoration(new RecyclerViewDivider());
         RefreshEvent();
-        initCategoryData();
         return view;
     }
 
@@ -80,6 +81,7 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
                 curPage = 1;
                 state = STATE_REFRESH;
+                Log.i(TAG, "onRefresh: 刷新 category id = "+categoryId);
                 requestWares(categoryId);
             }
 
@@ -89,6 +91,8 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
                 curPage = mListCategory.getCurrentPage() + 1;
                 if (curPage <= mListCategory.getTotalPage()) {
                     state = STATE_LOADMORE;
+                    Log.i(TAG, "onRefresh: 加载 category id = "+categoryId);
+                    Log.i(TAG, "onRefreshLoadMore: 当前页= "+curPage);
                     requestWares(categoryId);
                 } else {
                     MyToast.showToast("没有更多数据");
@@ -103,8 +107,11 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
     private void getData() {
         switch (state) {
             case STATE_NORMAL:
-                mRightRecyclerView.setAdapter(mCategoryTruckAdapter);
+                mCategoryTruckAdapter = new CategoryTruckAdapter(mCategoryTruckBeanList, getActivity());
+                mCategoryTruckAdapter.setOnItemClickListener(CategoryFragment.this);
                 mRightRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
+                mRightRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRightRecyclerView.setAdapter(mCategoryTruckAdapter);
                 break;
             case STATE_REFRESH:
                 mCategoryTruckAdapter.refreshData(mCategoryTruckBeanList);
@@ -163,7 +170,11 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
                 requestWares(categoryId);
                 break;
             default:
-                MyToast.showToast("点击第"+(position+1)+"项");
+                CategoryTruckBean categoryTruckBean = mCategoryTruckAdapter.getItem(position);
+//                MyToast.showToast("点击第"+(position+1)+"项");
+                Intent intent = new Intent(getActivity(), TruckDetailActivity.class);
+                intent.putExtra("truck", categoryTruckBean);
+                startActivity(intent);
         }
     }
 
@@ -181,9 +192,11 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
             public void onResponse(ListCategory<CategoryTruckBean> response) {
                 mListCategory = response;
                 mCategoryTruckBeanList = response.getList();
+                if (mCategoryTruckBeanList.size() == 0) {
+                    MyToast.showToast("没有查询到商品");
+                }
+                Log.i(TAG, "onResponse: 增加的数据为"+mCategoryTruckBeanList.size());
                 //?
-                mCategoryTruckAdapter = new CategoryTruckAdapter(mCategoryTruckBeanList, getActivity());
-                mCategoryTruckAdapter.setOnItemClickListener(CategoryFragment.this);
                 getData();
             }
 

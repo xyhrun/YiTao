@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.xyh.shoppingdemo.widget.MyToolBar
+        android:id="@+id/truckDetail_mytoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/oftenYellow"
+        app:title="商品详情"
+        app:leftButton="@mipmap/toolbar_back"
+        app:rightButton="@mipmap/share"></com.example.xyh.shoppingdemo.widget.MyToolBar>
+
+    <WebView android:id="@+id/truckDetail_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></WebView>
+</LinearLayout>

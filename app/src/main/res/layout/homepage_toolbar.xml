@@ -28,7 +28,7 @@
 
     <!--~~~~~~~~左按钮-->
     <ImageButton
-        android:id="@+id/homepage_back"
+        android:id="@+id/homepage_leftIcon"
         android:layout_width="26dp"
         android:layout_height="26dp"
         android:visibility="gone"
@@ -60,7 +60,7 @@
 
     <!--右按钮-->
     <ImageButton
-        android:id="@+id/homepage_add"
+        android:id="@+id/homepage_rightIcon"
         android:layout_alignParentRight="true"
         android:layout_width="26dp"
         android:layout_height="26dp"
