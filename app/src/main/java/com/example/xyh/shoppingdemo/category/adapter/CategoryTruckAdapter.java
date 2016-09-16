@@ -27,8 +27,9 @@ public class CategoryTruckAdapter extends BaseAdapter<CategoryTruckBean, BaseVie
     }
 
     public void clearData() {
+        int count = getItemCount();
         mDatas.clear();
-        notifyItemRangeChanged(0, getItemCount());
+        notifyItemRangeRemoved(0, count);
     }
 
     //刷新数据
@@ -37,6 +38,7 @@ public class CategoryTruckAdapter extends BaseAdapter<CategoryTruckBean, BaseVie
         clearData();
         Log.i(TAG, "refreshData: 刷新的数据 = " + categoryTruckBeanList.size());
         mDatas.addAll(categoryTruckBeanList);
+//        notifyDataSetChanged();
         notifyItemRangeChanged(0, getItemCount());
     }
 

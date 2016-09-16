@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">ShoppingDemo</string>
+    <string name="app_name">易淘</string>
+    <string name="shape_title">分享</string>
 </resources>

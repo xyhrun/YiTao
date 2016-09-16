@@ -104,26 +104,6 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
         mMaterialRefreshLayout.finishRefreshLoadMore();
     }
 
-    private void getData() {
-        switch (state) {
-            case STATE_NORMAL:
-                mCategoryTruckAdapter = new CategoryTruckAdapter(mCategoryTruckBeanList, getActivity());
-                mCategoryTruckAdapter.setOnItemClickListener(CategoryFragment.this);
-                mRightRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
-                mRightRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                mRightRecyclerView.setAdapter(mCategoryTruckAdapter);
-                break;
-            case STATE_REFRESH:
-                mCategoryTruckAdapter.refreshData(mCategoryTruckBeanList);
-                mRightRecyclerView.scrollToPosition(0);
-                mMaterialRefreshLayout.finishRefresh();
-                break;
-            case STATE_LOADMORE:
-                mCategoryTruckAdapter.addData(mCategoryTruckBeanList);
-                mMaterialRefreshLayout.finishRefreshLoadMore();
-                break;
-        }
-    }
 
     private void initCategoryData() {
         OkHttpClientManager.getAsyn(Api.CATEGORY_LIST, new OkHttpClientManager.ResultCallback<List<CategoryBean>>() {
@@ -201,5 +181,26 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
             }
 
         });
+    }
+
+    private void getData() {
+        switch (state) {
+            case STATE_NORMAL:
+                mCategoryTruckAdapter = new CategoryTruckAdapter(mCategoryTruckBeanList, getActivity());
+                mCategoryTruckAdapter.setOnItemClickListener(CategoryFragment.this);
+                mRightRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
+                mRightRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRightRecyclerView.setAdapter(mCategoryTruckAdapter);
+                break;
+            case STATE_REFRESH:
+                mCategoryTruckAdapter.refreshData(mCategoryTruckBeanList);
+                mRightRecyclerView.scrollToPosition(0);
+                mMaterialRefreshLayout.finishRefresh();
+                break;
+            case STATE_LOADMORE:
+                mCategoryTruckAdapter.addData(mCategoryTruckBeanList);
+                mMaterialRefreshLayout.finishRefreshLoadMore();
+                break;
+        }
     }
 }

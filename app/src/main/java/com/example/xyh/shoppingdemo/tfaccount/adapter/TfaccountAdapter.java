@@ -33,8 +33,9 @@ public class TfaccountAdapter extends BaseAdapter<TruckBean, BaseViewHolder> {
     }
 
     public void clearData() {
+        int count = getItemCount();
         mDatas.clear();
-        notifyItemRangeChanged(0, getItemCount());
+        notifyItemRangeRemoved(0, count);
     }
 
     //刷新数据
