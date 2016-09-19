@@ -20,6 +20,6 @@ public class CategoryAdapter extends BaseAdapter<CategoryBean, BaseViewHolder> {
 
     @Override
     public void bindData(BaseViewHolder holder, CategoryBean categoryBean) {
-        holder.setText(R.id.category_leftList_item, categoryBean.getName());
+        holder.setTextOnClickListener(R.id.category_leftList_item, categoryBean.getName());
     }
 }

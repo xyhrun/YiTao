@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
     android:gravity="center"
-    android:background="@drawable/selector_category_left"
-    android:clickable="true"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <TextView android:id="@+id/category_leftList_item"
+    <TextView
+        android:id="@+id/category_leftList_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        android:textSize="18sp"/>
+        android:layout_height="60dp"
+        android:background="@drawable/selector_category_left"
+        android:gravity="center"
+        android:textSize="18sp" />
+
+    <!--<RadioButton-->
+    <!--android:id="@+id/category_leftList_item"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:button="@null"-->
+    <!--android:gravity="center"-->
+    <!--android:text="科技阿凡达 "-->
+    <!--android:textSize="18sp"/>-->
 </LinearLayout>

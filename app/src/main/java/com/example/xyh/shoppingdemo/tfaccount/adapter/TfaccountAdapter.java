@@ -29,7 +29,7 @@ public class TfaccountAdapter extends BaseAdapter<TruckBean, BaseViewHolder> {
         holder.setText(R.id.tfaccount_truckName, truckBean.getName())
                 .setImageView(R.id.tfaccount_truckImage, truckBean.getImgUrl())
                 .setText(R.id.tfaccount_truckPrice, truckBean.getPrice() + "")
-                .setButtonClickListener(R.id.tfaccount_truckBuy);
+            .setButtonClickListener(R.id.tfaccount_truckBuy);
     }
 
     public void clearData() {

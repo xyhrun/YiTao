@@ -10,7 +10,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.xyh.shoppingdemo.R;
-import com.example.xyh.shoppingdemo.category.model.CategoryTruckBean;
+import com.example.xyh.shoppingdemo.cart.CartProvider;
+import com.example.xyh.shoppingdemo.tfaccount.model.TruckBean;
 import com.example.xyh.shoppingdemo.util.Api;
 import com.example.xyh.shoppingdemo.util.MyToast;
 import com.example.xyh.shoppingdemo.widget.MyToolBar;
@@ -31,17 +32,19 @@ public class TruckDetailActivity extends AppCompatActivity implements View.OnCli
     @Bind(R.id.truckDetail_webview)
     WebView mWebView;
 
+    private CartProvider mCartProvider;
     private WebAppInterface mAppInterfce;
-    private CategoryTruckBean mCategoryTruckBean;
+    private TruckBean mTruckBean;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_truckdetail);
         ButterKnife.bind(this);
+        mCartProvider = new CartProvider(this);
         mMytoolbar.setLeftIconClickListener(this);
         mMytoolbar.setRightIconClickListener(this);
-        mCategoryTruckBean = (CategoryTruckBean) getIntent().getSerializableExtra("truck");
-        if (mCategoryTruckBean == null) {
+        mTruckBean = (TruckBean) getIntent().getSerializableExtra("truck");
+        if (mTruckBean == null) {
             MyToast.showToast("没有数据");
             finish();
         }
@@ -49,7 +52,6 @@ public class TruckDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initWebView(){
-
         WebSettings settings = mWebView.getSettings();
 
         settings.setJavaScriptEnabled(true);
@@ -84,7 +86,6 @@ public class TruckDetailActivity extends AppCompatActivity implements View.OnCli
     private void showShare() {
         ShareSDK.initSDK(this);
 
-
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
@@ -95,33 +96,31 @@ public class TruckDetailActivity extends AppCompatActivity implements View.OnCli
         oks.setTitle(getString(R.string.shape_title));
 
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl("http://www.cniao5.com");
+        oks.setTitleUrl("https://www.zhihu.com/");
 
         // text是分享文本，所有平台都需要这个字段
-        oks.setText(mCategoryTruckBean.getName());
+        oks.setText(mTruckBean.getName());
 
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
 //        oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
-        oks.setImageUrl(mCategoryTruckBean.getImgUrl());
+        oks.setImageUrl(mTruckBean.getImgUrl());
 
         // url仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl("http://www.cniao5.com");
+        oks.setUrl("https://www.zhihu.com/");
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        oks.setComment(mCategoryTruckBean.getName());
+        oks.setComment(mTruckBean.getName());
 
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
 
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://www.cniao5.com");
+        oks.setSiteUrl("https://www.zhihu.com/");
 
 // 启动分享GUI
         oks.show(this);
     }
 
     class WebAppInterface{
-
-
         private Context mContext;
         public WebAppInterface(Context context){
             mContext = context;
@@ -132,8 +131,7 @@ public class TruckDetailActivity extends AppCompatActivity implements View.OnCli
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
-                    mWebView.loadUrl("javascript:showDetail("+mCategoryTruckBean.getId()+")");
+                    mWebView.loadUrl("javascript:showDetail("+mTruckBean.getId()+")");
 
                 }
             });
@@ -142,18 +140,14 @@ public class TruckDetailActivity extends AppCompatActivity implements View.OnCli
 
         @JavascriptInterface
         public void buy(long id){
-
-//            cartProvider.put(mWare);
-//            ToastUtils.show(mContext,"已添加到购物车");
-
+            mCartProvider.put(mTruckBean);
+            MyToast.showToast("已添加到购物车");
         }
 
         @JavascriptInterface
         public void addFavorites(long id){
 
-
         }
-
     }
 
     class  WC extends WebViewClient {
@@ -171,4 +165,5 @@ public class TruckDetailActivity extends AppCompatActivity implements View.OnCli
         super.onDestroy();
         ShareSDK.stopSDK(this);
     }
+
 }

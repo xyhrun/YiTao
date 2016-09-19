@@ -6,24 +6,24 @@ import android.util.Log;
 import com.example.xyh.shoppingdemo.R;
 import com.example.xyh.shoppingdemo.base.BaseAdapter;
 import com.example.xyh.shoppingdemo.base.BaseViewHolder;
-import com.example.xyh.shoppingdemo.category.model.CategoryTruckBean;
+import com.example.xyh.shoppingdemo.tfaccount.model.TruckBean;
 
 import java.util.List;
 
 /**
  * Created by xyh on 2016/9/14.
  */
-public class CategoryTruckAdapter extends BaseAdapter<CategoryTruckBean, BaseViewHolder> {
+public class CategoryTruckAdapter extends BaseAdapter<TruckBean, BaseViewHolder> {
     private static final String TAG = "CategoryTruckAdapter";
-    public CategoryTruckAdapter(List<CategoryTruckBean> mDatas, Context mContext) {
+    public CategoryTruckAdapter(List<TruckBean> mDatas, Context mContext) {
         super(mDatas, mContext, R.layout.category_right_item);
     }
 
     @Override
-    public void bindData(BaseViewHolder holder, CategoryTruckBean categoryTruckBean) {
-        holder.setText(R.id.category_truckName, categoryTruckBean.getName());
-        holder.setText(R.id.category_truckPrice, categoryTruckBean.getPrice()+"");
-        holder.setImageView(R.id.category_truckImage, categoryTruckBean.getImgUrl());
+    public void bindData(BaseViewHolder holder, TruckBean TruckBean) {
+        holder.setText(R.id.category_truckName, TruckBean.getName());
+        holder.setText(R.id.category_truckPrice, TruckBean.getPrice()+"");
+        holder.setImageView(R.id.category_truckImage, TruckBean.getImgUrl());
     }
 
     public void clearData() {
@@ -33,21 +33,21 @@ public class CategoryTruckAdapter extends BaseAdapter<CategoryTruckBean, BaseVie
     }
 
     //刷新数据
-    public void refreshData(List<CategoryTruckBean> categoryTruckBeanList) {
+    public void refreshData(List<TruckBean> TruckBeanList) {
         //刷新前把数据清除
         clearData();
-        Log.i(TAG, "refreshData: 刷新的数据 = " + categoryTruckBeanList.size());
-        mDatas.addAll(categoryTruckBeanList);
+        Log.i(TAG, "refreshData: 刷新的数据 = " + TruckBeanList.size());
+        mDatas.addAll(TruckBeanList);
 //        notifyDataSetChanged();
         notifyItemRangeChanged(0, getItemCount());
     }
 
 
     //增加数据
-    public void addData(List<CategoryTruckBean> categoryTruckBeanList) {
-        if (categoryTruckBeanList != null && categoryTruckBeanList.size() > 0) {
-            mDatas.addAll(categoryTruckBeanList);
-            notifyItemRangeChanged(getItemCount(), categoryTruckBeanList.size());
+    public void addData(List<TruckBean> TruckBeanList) {
+        if (TruckBeanList != null && TruckBeanList.size() > 0) {
+            mDatas.addAll(TruckBeanList);
+            notifyItemRangeChanged(getItemCount(), TruckBeanList.size());
         }
 
     }

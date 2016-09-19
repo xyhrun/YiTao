@@ -1,15 +1,17 @@
 package com.example.xyh.shoppingdemo.base;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.xyh.shoppingdemo.widget.NumberAddSubView;
 
 /**
  * Created by xyh on 2016/9/13.
@@ -39,12 +41,14 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public BaseViewHolder setText(int resId, String content) {
         TextView text = (TextView) getViewById(resId);
         text.setText(content);
-        text.setOnClickListener(this);
         return this;
     }
 
-    public View getTextView(int resId) {
-        return getViewById(resId);
+    public BaseViewHolder setTextOnClickListener(int resId, String content) {
+        TextView text = (TextView) getViewById(resId);
+        text.setText(content);
+        text.setOnClickListener(this);
+        return this;
     }
 
     public View getImageView(int resId) {
@@ -62,16 +66,25 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         return this;
     }
 
-    public BaseViewHolder setImageView(int resId, Drawable drawable) {
+    public BaseViewHolder getImageView(int resId, int imageId) {
+        return this;
+    }
+
+    public RadioButton setRadioButton(int resId, String content) {
+        RadioButton radioButton = getViewById(resId);
+        radioButton.setOnClickListener(this);
+        radioButton.setText(content);
+        return radioButton;
+    }
+
+    public void setImageViewOnClickListener(int resId, String url) {
         ImageView image =  getViewById(resId);
         image.setOnClickListener(this);
-        image.setBackground(drawable);
-        return this;
+        Glide.with(mContext).load(url).asBitmap().into(image);
     }
 
     public BaseViewHolder setImageView(int resId, String url) {
         ImageView image =  getViewById(resId);
-        image.setOnClickListener(this);
         Glide.with(mContext).load(url).asBitmap().into(image);
         return this;
     }
@@ -88,6 +101,14 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         Button button = getViewById(resId);
         button.setOnClickListener(this);
         return this;
+    }
+
+    public CheckBox getCheckBox(int resId) {
+       return getViewById(resId);
+    }
+
+    public NumberAddSubView getNumberAddSubView(int resId) {
+        return getViewById(resId);
     }
 
     @Override

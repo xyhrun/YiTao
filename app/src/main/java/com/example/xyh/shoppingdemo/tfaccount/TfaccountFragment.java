@@ -1,5 +1,6 @@
 package com.example.xyh.shoppingdemo.tfaccount;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,8 @@ import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.example.xyh.shoppingdemo.R;
 import com.example.xyh.shoppingdemo.base.BaseAdapter;
+import com.example.xyh.shoppingdemo.cart.CartProvider;
+import com.example.xyh.shoppingdemo.category.activity.TruckDetailActivity;
 import com.example.xyh.shoppingdemo.net.OkHttpClientManager;
 import com.example.xyh.shoppingdemo.tfaccount.adapter.TfaccountAdapter;
 import com.example.xyh.shoppingdemo.tfaccount.model.BaseTruckBean;
@@ -50,6 +53,7 @@ public class TfaccountFragment extends Fragment implements BaseAdapter.OnItemCli
     private TfaccountAdapter mTfaccountAdapter;
     private BaseTruckBean<TruckBean> mBaseTruckBean;
     private List<TruckBean> mTruckBeanList;
+    private CartProvider mCartProvider;
     //下拉刷新的状态
     private static final int STATE_NORMAL = 0;
     private static final int STATE_REFRESH = 1;
@@ -61,6 +65,7 @@ public class TfaccountFragment extends Fragment implements BaseAdapter.OnItemCli
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.from(container.getContext()).inflate(R.layout.fragment_tfaccount, container, false);
         ButterKnife.bind(this, view);
+        mCartProvider = new CartProvider(getActivity());
         getData();
         RefreshEvent();
         return view;
@@ -143,17 +148,19 @@ public class TfaccountFragment extends Fragment implements BaseAdapter.OnItemCli
     @Override
     public void onClick(View v, int position) {
        List<TruckBean> truckBeanList =  mTfaccountAdapter.getDatas();
+        TruckBean truckBean = truckBeanList.get(position);
         Log.i(TAG, "onClick: position = "+position);
         Log.i(TAG, "onClick: 商品个数~~~~~~~~~~~~~~"+truckBeanList.size());
         switch (v.getId()) {
             case R.id.tfaccount_truckBuy:
-                MyToast.showToast("你已预定了第" + (position + 1) + "项商品, 请在45分钟内完成支付");
-                break;
-            case R.id.tfaccount_truckImage:
-                MyToast.showToast(""+truckBeanList.get(position).getName());
+                Log.i(TAG, "onClick: truckBean = "+truckBean);
+                mCartProvider.put(truckBean);
+                MyToast.showToast("已加入购物车");
                 break;
             default:
-                MyToast.showToast("点击第" + (position + 1) + "项数据, 其价格为"+truckBeanList.get(position).getPrice());
+                Intent intent = new Intent(getActivity(), TruckDetailActivity.class);
+                intent.putExtra("truck", truckBean);
+                startActivity(intent);
         }
     }
 }

@@ -200,7 +200,7 @@ public class BannerLayout extends RelativeLayout {
         int targetItemPosition = Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % itemCount;
         pager.setCurrentItem(targetItemPosition);
         switchIndicator(targetItemPosition % itemCount);
-        pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 switchIndicator(position % itemCount);

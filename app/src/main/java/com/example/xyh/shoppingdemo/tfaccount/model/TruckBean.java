@@ -1,9 +1,11 @@
 package com.example.xyh.shoppingdemo.tfaccount.model;
 
+import java.io.Serializable;
+
 /**
  * Created by xyh on 2016/9/12.
  */
-public class TruckBean {
+public class TruckBean implements Serializable{
     /**
      * id : 1
      * name : 联想（Lenovo）拯救者14.0英寸游戏本（i7-4720HQ 4G 1T硬盘 GTX960M 2G独显 FHD IPS屏 背光键盘）黑

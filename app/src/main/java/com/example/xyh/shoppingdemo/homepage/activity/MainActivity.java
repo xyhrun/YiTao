@@ -12,10 +12,10 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.example.xyh.shoppingdemo.R;
-import com.example.xyh.shoppingdemo.homepage.adapter.ViewPagerAdapter;
-import com.example.xyh.shoppingdemo.fragment.AccountFragment;
-import com.example.xyh.shoppingdemo.fragment.CartFragment;
+import com.example.xyh.shoppingdemo.account.AccountFragment;
+import com.example.xyh.shoppingdemo.cart.CartFragment;
 import com.example.xyh.shoppingdemo.category.CategoryFragment;
+import com.example.xyh.shoppingdemo.homepage.adapter.ViewPagerAdapter;
 import com.example.xyh.shoppingdemo.homepage.fragment.HomePageFragment;
 import com.example.xyh.shoppingdemo.tfaccount.TfaccountFragment;
 
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] titles = {"首页", "微淘", "分类", "购物车", "我的淘宝"};
     private List<Fragment> fragmentList;
     private ViewPagerAdapter mViewPagerAdapter;
+    private CartFragment cartFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +73,23 @@ public class MainActivity extends AppCompatActivity {
         mFragmentTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
+//                if (tabId == getString(R.string.cart)) {
+//                    refreshData(tabId);
+//                }
                 mViewPager.setCurrentItem(mFragmentTabHost.getCurrentTab());
             }
         });
+    }
+
+    private void refreshData(String tabId) {
+        if (cartFragment == null) {
+            Fragment cart = (CartFragment) getSupportFragmentManager().findFragmentByTag(tabId);
+            if (cart != null) {
+                cartFragment = (CartFragment) cart;
+            }
+        }
+        cartFragment.refreshData();
+
     }
 
     private void initData() {

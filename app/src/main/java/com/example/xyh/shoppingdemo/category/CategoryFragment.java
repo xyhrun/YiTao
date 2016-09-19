@@ -21,9 +21,9 @@ import com.example.xyh.shoppingdemo.category.activity.TruckDetailActivity;
 import com.example.xyh.shoppingdemo.category.adapter.CategoryAdapter;
 import com.example.xyh.shoppingdemo.category.adapter.CategoryTruckAdapter;
 import com.example.xyh.shoppingdemo.category.model.CategoryBean;
-import com.example.xyh.shoppingdemo.category.model.CategoryTruckBean;
 import com.example.xyh.shoppingdemo.category.model.ListCategory;
 import com.example.xyh.shoppingdemo.net.OkHttpClientManager;
+import com.example.xyh.shoppingdemo.tfaccount.model.TruckBean;
 import com.example.xyh.shoppingdemo.util.Api;
 import com.example.xyh.shoppingdemo.util.DividerItemDecoration;
 import com.example.xyh.shoppingdemo.util.MyToast;
@@ -43,8 +43,8 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
     private CategoryAdapter mCategoryAdapter;
     private CategoryTruckAdapter mCategoryTruckAdapter;
     private List<CategoryBean> mCategoryBeanList;
-    private List<CategoryTruckBean> mCategoryTruckBeanList;
-    private ListCategory<CategoryTruckBean> mListCategory;
+    private List<TruckBean> mTruckBeanList;
+    private ListCategory<TruckBean> mListCategory;
     @Bind(R.id.category_leftlist)
     RecyclerView mLeftRecyclerView;
 
@@ -150,10 +150,10 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
                 requestWares(categoryId);
                 break;
             default:
-                CategoryTruckBean categoryTruckBean = mCategoryTruckAdapter.getItem(position);
+                TruckBean truckBean = mCategoryTruckAdapter.getItem(position);
 //                MyToast.showToast("点击第"+(position+1)+"项");
                 Intent intent = new Intent(getActivity(), TruckDetailActivity.class);
-                intent.putExtra("truck", categoryTruckBean);
+                intent.putExtra("truck", truckBean);
                 startActivity(intent);
         }
     }
@@ -162,20 +162,20 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
     private void requestWares(int categoryId) {
         String url = Api.WARES_LIST + "?categoryId=" + categoryId +
                 "&curPage=" + curPage + "&pageSize=" + pageSize;
-        OkHttpClientManager.getAsyn(url, new OkHttpClientManager.ResultCallback<ListCategory<CategoryTruckBean>>() {
+        OkHttpClientManager.getAsyn(url, new OkHttpClientManager.ResultCallback<ListCategory<TruckBean>>() {
             @Override
             public void onError(Request mRequest, Exception e) {
 
             }
 
             @Override
-            public void onResponse(ListCategory<CategoryTruckBean> response) {
+            public void onResponse(ListCategory<TruckBean> response) {
                 mListCategory = response;
-                mCategoryTruckBeanList = response.getList();
-                if (mCategoryTruckBeanList.size() == 0) {
+                mTruckBeanList = response.getList();
+                if (mTruckBeanList.size() == 0) {
                     MyToast.showToast("没有查询到商品");
                 }
-                Log.i(TAG, "onResponse: 增加的数据为"+mCategoryTruckBeanList.size());
+                Log.i(TAG, "onResponse: 增加的数据为"+mTruckBeanList.size());
                 //?
                 getData();
             }
@@ -186,19 +186,19 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
     private void getData() {
         switch (state) {
             case STATE_NORMAL:
-                mCategoryTruckAdapter = new CategoryTruckAdapter(mCategoryTruckBeanList, getActivity());
+                mCategoryTruckAdapter = new CategoryTruckAdapter(mTruckBeanList, getActivity());
                 mCategoryTruckAdapter.setOnItemClickListener(CategoryFragment.this);
                 mRightRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
                 mRightRecyclerView.setItemAnimator(new DefaultItemAnimator());
                 mRightRecyclerView.setAdapter(mCategoryTruckAdapter);
                 break;
             case STATE_REFRESH:
-                mCategoryTruckAdapter.refreshData(mCategoryTruckBeanList);
+                mCategoryTruckAdapter.refreshData(mTruckBeanList);
                 mRightRecyclerView.scrollToPosition(0);
                 mMaterialRefreshLayout.finishRefresh();
                 break;
             case STATE_LOADMORE:
-                mCategoryTruckAdapter.addData(mCategoryTruckBeanList);
+                mCategoryTruckAdapter.addData(mTruckBeanList);
                 mMaterialRefreshLayout.finishRefreshLoadMore();
                 break;
         }

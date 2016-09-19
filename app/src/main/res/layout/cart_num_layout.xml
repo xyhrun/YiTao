@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/background">
+
+
+    <Button android:id="@+id/cart_reduce"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:background="@drawable/selector_cart_num"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:text="-"></Button>
+
+    <TextView android:id="@+id/cart_numValue"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:textSize="20sp"
+        android:gravity="center"></TextView>
+
+    <Button android:id="@+id/cart_add"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:background="@drawable/selector_cart_num"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:text="+"></Button>
+</LinearLayout>

@@ -88,14 +88,14 @@ public class MyToolBar extends Toolbar {
         mRightBtn.setOnClickListener(listener);
     }
 
-    private void setRightIcon(Drawable rightButton) {
+    public void setRightIcon(Drawable rightButton) {
         if (rightButton != null) {
             mRightBtn.setBackground(rightButton);
             mRightBtn.setVisibility(VISIBLE);
         }
     }
 
-    private void setLeftIcon(Drawable leftButton) {
+    public void setLeftIcon(Drawable leftButton) {
         if (leftButton != null) {
             //设置setImageDrawable图片后面会有灰色的块
             mLeftBtn.setBackground(leftButton);

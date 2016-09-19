@@ -17,6 +17,8 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 //    public int publicT;
 //    private int privateT;
 //    protected int protectT;
+private static final String TAG = "BaseAdapter";
+
     protected List<T> mDatas;
     protected LayoutInflater mLayoutInflater;
     protected Context mContext;
@@ -47,7 +49,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mLayoutInflater.inflate(mLayoutResId, null);
+        View view = mLayoutInflater.inflate(mLayoutResId, parent, false);
         return new BaseViewHolder(mContext, view, mOnItemClickListener);
     }
 
@@ -61,6 +63,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
     @Override
     public int getItemCount() {
+//        Log.i(TAG, "getItemCount: "+mDatas.size());
         return mDatas == null ? 0 : mDatas.size();
     }
 

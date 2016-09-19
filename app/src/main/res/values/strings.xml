@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">易淘</string>
     <string name="shape_title">分享</string>
+
+    <string name="homepage">首页</string>
+    <string name="tfaccount">微淘</string>
+    <string name="category">分类</string>
+    <string name="cart">购物车</string>
+    <string name="mine">我的淘宝</string>
 </resources>

@@ -1,57 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
     android:background="@drawable/selector_tfacoount_item"
+    android:orientation="horizontal"
     android:padding="8dp">
 
-    <ImageView android:id="@+id/tfaccount_truckImage"
+    <ImageView
+        android:id="@+id/tfaccount_truckImage"
         android:layout_width="120dp"
         android:layout_height="match_parent" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="120dp"
         android:layout_marginLeft="10dp"
+        android:orientation="vertical"
         android:layout_weight="1">
 
-        <TextView android:id="@+id/tfaccount_truckName"
+        <TextView
+            android:id="@+id/tfaccount_truckName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:maxLines="2"></TextView>
+            android:maxLines="3"
+            android:textSize="16sp"></TextView>
 
-        <LinearLayout android:id="@+id/tfaccount_truckPriceInfo"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tfaccount_truckName"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/tfaccount_truckPriceInfo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="¥"
-                android:layout_marginRight="2dp"
-                android:textColor="@color/red"
-                android:textSize="22sp"/>
+                android:orientation="horizontal">
 
-            <TextView android:id="@+id/tfaccount_truckPrice"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2dp"
+                    android:text="¥"
+                    android:textColor="@color/red"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/tfaccount_truckPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="234"
+                    android:textColor="@color/red"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/tfaccount_truckBuy"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="@color/red"
-                android:text="234"/>
-        </LinearLayout>
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/tfaccount_truckPriceInfo"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/selector_button"
+                android:text="立即购买"
+                android:textColor="@color/white" />
+        </RelativeLayout>
 
-        <Button android:id="@+id/tfaccount_truckBuy"
-            android:layout_below="@+id/tfaccount_truckPriceInfo"
-            android:layout_marginBottom="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:text="立即购买"
-            android:background="@drawable/selector_button"
-            android:textColor="@color/white" />
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

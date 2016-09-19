@@ -20,7 +20,7 @@ public class CategoryTruckBean implements Serializable{
     private String name;
     private String imgUrl;
     private Object description;
-    private double price;
+    private float price;
     private int sale;
 
     public int getId() {
@@ -55,11 +55,11 @@ public class CategoryTruckBean implements Serializable{
         this.description = description;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 

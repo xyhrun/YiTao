@@ -9,6 +9,14 @@
         <attr name="titleTextSize" format="reference|integer"/>
     </declare-styleable>
 
+    <declare-styleable name="NumberAddSubView">
+        <attr name="value" format="reference|integer"></attr>
+        <attr name="maxValue" format="reference|integer"></attr>
+        <attr name="minValue" format="reference|integer"></attr>
+        <attr name="numBackground" format="reference"></attr>
+        <attr name="addBackground" format="reference"></attr>
+        <attr name="reduceBackground" format="reference"></attr>
+    </declare-styleable>
 
     <declare-styleable name="BannerLayoutStyle">
         <attr name="autoPlayDuration" format="integer|reference" />
