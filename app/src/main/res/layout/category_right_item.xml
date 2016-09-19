@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:contentPadding="5dp"
-    android:clickable="true"
-    android:background="@drawable/selector_category_right_item"
-    android:clipChildren="false"
+    android:background="@color/white"
     android:layout_marginRight="3dp"
     android:layout_marginLeft="3dp"
     app:cardCornerRadius="3dp"
@@ -15,6 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/selector_category_right_item"
         android:orientation="vertical">
 
         <ImageView

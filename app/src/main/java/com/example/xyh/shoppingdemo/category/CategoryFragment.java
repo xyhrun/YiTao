@@ -23,6 +23,8 @@ import com.example.xyh.shoppingdemo.category.adapter.CategoryTruckAdapter;
 import com.example.xyh.shoppingdemo.category.model.CategoryBean;
 import com.example.xyh.shoppingdemo.category.model.ListCategory;
 import com.example.xyh.shoppingdemo.net.OkHttpClientManager;
+import com.example.xyh.shoppingdemo.net.ResultCallback;
+import com.example.xyh.shoppingdemo.net.SpotsCallback;
 import com.example.xyh.shoppingdemo.tfaccount.model.TruckBean;
 import com.example.xyh.shoppingdemo.util.Api;
 import com.example.xyh.shoppingdemo.util.DividerItemDecoration;
@@ -81,7 +83,7 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
                 curPage = 1;
                 state = STATE_REFRESH;
-                Log.i(TAG, "onRefresh: 刷新 category id = "+categoryId);
+                Log.i(TAG, "onRefresh: 刷新 category id = " + categoryId);
                 requestWares(categoryId);
             }
 
@@ -91,8 +93,8 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
                 curPage = mListCategory.getCurrentPage() + 1;
                 if (curPage <= mListCategory.getTotalPage()) {
                     state = STATE_LOADMORE;
-                    Log.i(TAG, "onRefresh: 加载 category id = "+categoryId);
-                    Log.i(TAG, "onRefreshLoadMore: 当前页= "+curPage);
+                    Log.i(TAG, "onRefresh: 加载 category id = " + categoryId);
+                    Log.i(TAG, "onRefreshLoadMore: 当前页= " + curPage);
                     requestWares(categoryId);
                 } else {
                     MyToast.showToast("没有更多数据");
@@ -106,7 +108,7 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
 
 
     private void initCategoryData() {
-        OkHttpClientManager.getAsyn(Api.CATEGORY_LIST, new OkHttpClientManager.ResultCallback<List<CategoryBean>>() {
+        OkHttpClientManager.getAsyn(Api.CATEGORY_LIST, new SpotsCallback<List<CategoryBean>>(getActivity()) {
             @Override
             public void onError(Request mRequest, Exception e) {
                 Log.i(TAG, "onError: 出错了");
@@ -162,7 +164,7 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
     private void requestWares(int categoryId) {
         String url = Api.WARES_LIST + "?categoryId=" + categoryId +
                 "&curPage=" + curPage + "&pageSize=" + pageSize;
-        OkHttpClientManager.getAsyn(url, new OkHttpClientManager.ResultCallback<ListCategory<TruckBean>>() {
+        OkHttpClientManager.getAsyn(url, new ResultCallback<ListCategory<TruckBean>>() {
             @Override
             public void onError(Request mRequest, Exception e) {
 
@@ -175,11 +177,25 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
                 if (mTruckBeanList.size() == 0) {
                     MyToast.showToast("没有查询到商品");
                 }
-                Log.i(TAG, "onResponse: 增加的数据为"+mTruckBeanList.size());
+                Log.i(TAG, "onResponse: 增加的数据为" + mTruckBeanList.size());
                 //?
                 getData();
             }
 
+            @Override
+            public void onBeforeRequest(Request request) {
+
+            }
+
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onSuccess(ListCategory<TruckBean> response) {
+
+            }
         });
     }
 

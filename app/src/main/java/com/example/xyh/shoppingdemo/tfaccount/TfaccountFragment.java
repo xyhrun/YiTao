@@ -19,6 +19,7 @@ import com.example.xyh.shoppingdemo.base.BaseAdapter;
 import com.example.xyh.shoppingdemo.cart.CartProvider;
 import com.example.xyh.shoppingdemo.category.activity.TruckDetailActivity;
 import com.example.xyh.shoppingdemo.net.OkHttpClientManager;
+import com.example.xyh.shoppingdemo.net.SpotsCallback;
 import com.example.xyh.shoppingdemo.tfaccount.adapter.TfaccountAdapter;
 import com.example.xyh.shoppingdemo.tfaccount.model.BaseTruckBean;
 import com.example.xyh.shoppingdemo.tfaccount.model.TruckBean;
@@ -102,7 +103,7 @@ public class TfaccountFragment extends Fragment implements BaseAdapter.OnItemCli
 
     private void getData() {
         String url = Api.HOT_TRUCK_URL + "?curPage=" + curPage + "&pageSize=" + pageSize;
-        OkHttpClientManager.getAsyn(url, new OkHttpClientManager.ResultCallback<BaseTruckBean<TruckBean>>() {
+        OkHttpClientManager.getAsyn(url, new SpotsCallback<BaseTruckBean<TruckBean>>(getActivity()) {
             @Override
             public void onError(Request mRequest, Exception e) {
                 Log.i(TAG, "onError: 热卖返回错误数据");

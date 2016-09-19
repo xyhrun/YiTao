@@ -8,14 +8,11 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
-import com.google.gson.internal.$Gson$Types;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.net.FileNameMap;
 import java.net.URLConnection;
 import java.util.Map;
@@ -393,6 +390,7 @@ public class OkHttpClientManager {
     }
 
     private void deliveryResult(final Request request, final ResultCallback resultCallback) {
+        resultCallback.onBeforeRequest(request);
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -448,6 +446,7 @@ public class OkHttpClientManager {
             @Override
             public void run() {
                 if (callback != null) {
+                    callback.onFailure(request, e);
                     callback.onError(request, e);
                 }
             }
@@ -460,37 +459,13 @@ public class OkHttpClientManager {
             public void run() {
                 Log.i(TAG, "run: object = " + object);
                 if (callback != null) {
+                    callback.onSuccess(object);
                     callback.onResponse(object);
                 }
             }
         });
     }
 
-    /**
-     * @param <T>
-     */
-    public static abstract class ResultCallback<T> {
-        Type mType;
-
-        public ResultCallback() {
-            mType = getSuperclassTypeParameter(getClass());
-        }
-
-        static Type getSuperclassTypeParameter(Class<?> subClass) {
-            Type superClass = subClass.getGenericSuperclass();
-            //如果superClass是Class的一个实例
-            if (superClass instanceof Class) {
-                throw new RuntimeException("Miss type parameter");
-            }
-
-            ParameterizedType parameterized = (ParameterizedType) superClass;
-            return $Gson$Types.canonicalize(parameterized.getActualTypeArguments()[0]);
-        }
-
-        public abstract void onError(Request mRequest, Exception e);
-
-        public abstract void onResponse(T response);
-    }
 
     /**
      * param类  里面存放的是Post请求 键值对

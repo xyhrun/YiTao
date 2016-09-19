@@ -61,13 +61,14 @@
 
         <activity
             android:name="com.mob.tools.MobUIShell"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <data android:scheme="tencent1105696240" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -77,66 +78,66 @@
         <!--&lt;!&ndash; 分享内容编辑页 &ndash;&gt;-->
 
         <!--<activity-->
-            <!--android:name="com.umeng.socialize.editorpage.ShareActivity"-->
-            <!--android:theme="@style/Theme.UMDefault"-->
-            <!--android:excludeFromRecents="true"/>-->
+        <!--android:name="com.umeng.socialize.editorpage.ShareActivity"-->
+        <!--android:theme="@style/Theme.UMDefault"-->
+        <!--android:excludeFromRecents="true"/>-->
 
         <!--&lt;!&ndash; 友盟AppKey， 需要替换成你自己的 &ndash;&gt;-->
         <!--<meta-data-->
-            <!--android:name="UMENG_APPKEY"-->
-            <!--android:value="570dd1f3e0f55a9d0d001c17" />-->
+        <!--android:name="UMENG_APPKEY"-->
+        <!--android:value="570dd1f3e0f55a9d0d001c17" />-->
 
         <!--<activity-->
-            <!--android:name="com.umeng.socialize.editorpage.ShareActivity"-->
-            <!--android:theme="@style/Theme.UMDefault"-->
-            <!--android:excludeFromRecents="true"/>-->
+        <!--android:name="com.umeng.socialize.editorpage.ShareActivity"-->
+        <!--android:theme="@style/Theme.UMDefault"-->
+        <!--android:excludeFromRecents="true"/>-->
 
         <!--&lt;!&ndash;微信分享&ndash;&gt;-->
         <!--<activity-->
-            <!--android:name=".share.wxapi.WXEntryActivity"-->
-            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
-            <!--android:exported="true"-->
-            <!--android:launchMode="singleTop"-->
-            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" >-->
+        <!--android:name=".share.wxapi.WXEntryActivity"-->
+        <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+        <!--android:exported="true"-->
+        <!--android:launchMode="singleTop"-->
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" >-->
         <!--</activity>-->
 
 
         <!--&lt;!&ndash;QQ分享&ndash;&gt;-->
         <!--<activity-->
-            <!--android:name="com.tencent.tauth.AuthActivity"-->
-            <!--android:launchMode="singleTask"-->
-            <!--android:noHistory="true" >-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
+        <!--android:name="com.tencent.tauth.AuthActivity"-->
+        <!--android:launchMode="singleTask"-->
+        <!--android:noHistory="true" >-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-                <!--<category android:name="android.intent.category.BROWSABLE" />-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!--<category android:name="android.intent.category.BROWSABLE" />-->
 
-                <!--<data android:scheme="tencent1105696240" />&lt;!&ndash;TODO 修改为自己的key&ndash;&gt;-->
-            <!--</intent-filter>-->
+        <!--<data android:scheme="tencent1105696240" />&lt;!&ndash;TODO 修改为自己的key&ndash;&gt;-->
+        <!--</intent-filter>-->
         <!--</activity>-->
         <!--<activity-->
-            <!--android:name="com.tencent.connect.common.AssistActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
+        <!--android:name="com.tencent.connect.common.AssistActivity"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
 
 
         <!--&lt;!&ndash;微博分享&ndash;&gt;-->
         <!--<activity-->
-            <!--android:name=".share.wbapi.WBShareActivity"-->
-            <!--android:configChanges="keyboardHidden|orientation"-->
-            <!--android:screenOrientation="portrait" >-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--</intent-filter>-->
+        <!--android:name=".share.wbapi.WBShareActivity"-->
+        <!--android:configChanges="keyboardHidden|orientation"-->
+        <!--android:screenOrientation="portrait" >-->
+        <!--<intent-filter>-->
+        <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!--</intent-filter>-->
         <!--</activity>-->
 
         <!--<activity-->
-            <!--android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"-->
-            <!--android:configChanges="keyboardHidden|orientation"-->
-            <!--android:windowSoftInputMode="adjustResize"-->
-            <!--android:exported="false" >-->
+        <!--android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"-->
+        <!--android:configChanges="keyboardHidden|orientation"-->
+        <!--android:windowSoftInputMode="adjustResize"-->
+        <!--android:exported="false" >-->
         <!--</activity>-->
         <!--in weibosdkcore_3.0.1.jar and before:xiong_it。微博SDK V3.1以后，剔除了这个Service，不用添加，否则报红色，并且无法消除-->
         <!--<service android:name="com.sina.weibo.sdk.net.DownloadService"

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.example.xyh.shoppingdemo.homepage.adapter.MyRecyclerAdapter;
 import com.example.xyh.shoppingdemo.homepage.model.BannerBean;
 import com.example.xyh.shoppingdemo.homepage.model.CampaignBean;
 import com.example.xyh.shoppingdemo.net.OkHttpClientManager;
+import com.example.xyh.shoppingdemo.net.SpotsCallback;
 import com.example.xyh.shoppingdemo.util.Api;
 import com.example.xyh.shoppingdemo.util.MyToast;
 import com.example.xyh.shoppingdemo.util.RecyclerViewDivider;
@@ -68,15 +70,10 @@ public class HomePageFragment extends Fragment implements IFragmentView, View.On
     }
 
     private void recyclerViewData() {
-        OkHttpClientManager.getAsyn(Api.CAMPAIGN_URL, new OkHttpClientManager.ResultCallback<List<CampaignBean>>() {
-            @Override
-            public void onError(Request mRequest, Exception e) {
-                e.printStackTrace();
-            }
-
+        OkHttpClientManager.getAsyn(Api.CAMPAIGN_URL, new SpotsCallback<List<CampaignBean>>(getActivity()) {
             @Override
             public void onResponse(List<CampaignBean> response) {
-//                Log.i(TAG, "onResponse: response.get(0).getTitle" + response.get(0).getTitle());
+                Log.i(TAG, "onResponse: response.get(0).getTitle" + response.get(0).getTitle());
                 mMyRecyclerAdapter = new MyRecyclerAdapter(response, getActivity());
                 //不设置LayoutManager什么都显示不出来
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -85,6 +82,11 @@ public class HomePageFragment extends Fragment implements IFragmentView, View.On
                 HeaderAndFooterAdapter headerAndFooterAdapter = new HeaderAndFooterAdapter(mMyRecyclerAdapter, getActivity());
                 //添加广告
                 addBannerHeader(headerAndFooterAdapter);
+            }
+
+            @Override
+            public void onError(Request mRequest, Exception e) {
+
             }
         });
     }
@@ -103,7 +105,7 @@ public class HomePageFragment extends Fragment implements IFragmentView, View.On
     }
 
     private void initData() {
-        OkHttpClientManager.getAsyn(Api.BANNER_URL, new OkHttpClientManager.ResultCallback<List<BannerBean>>() {
+        OkHttpClientManager.getAsyn(Api.BANNER_URL, new SpotsCallback<List<BannerBean>>(getActivity()) {
             @Override
             public void onError(Request mRequest, Exception e) {
 

@@ -32,4 +32,14 @@
     </style>
 
     <style name="Theme.UMDefault" parent="android:style/Theme.NoTitleBar"></style>
+
+
+
+        <style name="spotsDialog" parent="android:Theme.DeviceDefault.Dialog">
+            <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+            <item name="DialogTitleText">"已经在加油了"</item>
+            <item name="DialogSpotColor">@android:color/holo_blue_light</item>
+            <item name="DialogSpotCount">4</item>
+        </style>
+
 </resources>
