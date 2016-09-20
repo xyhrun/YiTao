@@ -59,6 +59,7 @@ public class CartFragment extends Fragment implements View.OnClickListener {
         View view = inflater.from(container.getContext()).inflate(R.layout.fragment_cart, container, false);
         ButterKnife.bind(this, view);
         showData();
+        Log.i(TAG, "-------------onCreateView: 执行了");
         mMyToolBar.setRightIconClickListener(this);
         mDel.setOnClickListener(this);
         return view;

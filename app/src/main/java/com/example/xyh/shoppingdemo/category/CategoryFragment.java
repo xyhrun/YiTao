@@ -71,6 +71,7 @@ public class CategoryFragment extends Fragment implements BaseAdapter.OnItemClic
         View view = inflater.from(container.getContext()).inflate(R.layout.fragment_category, container, false);
         ButterKnife.bind(this, view);
         initCategoryData();
+        Log.i(TAG, "-------------onCreateView: 执行了");
         //重复设置分割线， 会导致Item越来越小
         mRightRecyclerView.addItemDecoration(new RecyclerViewDivider());
         RefreshEvent();

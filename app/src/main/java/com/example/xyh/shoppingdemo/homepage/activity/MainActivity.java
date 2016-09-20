@@ -2,14 +2,10 @@ package com.example.xyh.shoppingdemo.homepage.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TabHost;
-import android.widget.TextView;
+import android.view.KeyEvent;
+import android.widget.RadioGroup;
 
 import com.example.xyh.shoppingdemo.R;
 import com.example.xyh.shoppingdemo.account.AccountFragment;
@@ -18,6 +14,7 @@ import com.example.xyh.shoppingdemo.category.CategoryFragment;
 import com.example.xyh.shoppingdemo.homepage.adapter.ViewPagerAdapter;
 import com.example.xyh.shoppingdemo.homepage.fragment.HomePageFragment;
 import com.example.xyh.shoppingdemo.tfaccount.TfaccountFragment;
+import com.example.xyh.shoppingdemo.util.MyToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,28 +26,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.main_viewPager)
     ViewPager mViewPager;
-    @Bind(R.id.main_fragmentTabHost)
-    FragmentTabHost mFragmentTabHost;
 
-    private int[] images = {R.drawable.selector_guide_homepage, R.drawable.selector_guide_tfaccount,
-            R.drawable.selector_guide_category, R.drawable.selector_guide_cart, R.drawable.selector_guide_account};
+    @Bind(R.id.radiogroup_id)
+    RadioGroup mRadioGroup;
 
-    private String[] titles = {"首页", "微淘", "分类", "购物车", "我的淘宝"};
+    private int[] ids = {R.id.guide_homepage, R.id.guide_tfaccount,
+            R.id.guide_category, R.id.guide_cart, R.id.guide_account};
+
     private List<Fragment> fragmentList;
     private ViewPagerAdapter mViewPagerAdapter;
     private CartFragment cartFragment;
-
+    private long firstExitime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        mViewPager.setOffscreenPageLimit(4);
         initData();
         setRelate();
-
+        mViewPager.setOffscreenPageLimit(4);
     }
-
 
     private void setRelate() {
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -61,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                mFragmentTabHost.setCurrentTab(position);
+                mRadioGroup.check(ids[position]);
             }
 
             @Override
@@ -70,13 +65,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mFragmentTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onTabChanged(String tabId) {
-//                if (tabId == getString(R.string.cart)) {
-//                    refreshData(tabId);
-//                }
-                mViewPager.setCurrentItem(mFragmentTabHost.getCurrentTab());
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.guide_homepage:
+                        mViewPager.setCurrentItem(0);
+                        break;
+                    case R.id.guide_tfaccount:
+                        mViewPager.setCurrentItem(1);
+                        break;
+                    case R.id.guide_category:
+                        mViewPager.setCurrentItem(2);
+                        break;
+                    case R.id.guide_cart:
+                        mViewPager.setCurrentItem(3);
+                        break;
+                    case R.id.guide_account:
+                        mViewPager.setCurrentItem(4);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
     }
@@ -107,23 +117,22 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragmentList);
 
-        mFragmentTabHost.setup(this, getSupportFragmentManager(), R.id.main_viewPager);
-        for (int i = 0; i < titles.length; i++) {
-            TabHost.TabSpec tabSpec = mFragmentTabHost.newTabSpec(titles[i])
-                    .setIndicator(getTabItemView(i));
-            mFragmentTabHost.addTab(tabSpec, fragmentList.get(i).getClass(), null);
-        }
         mViewPager.setAdapter(mViewPagerAdapter);
-        mFragmentTabHost.setCurrentTab(0);
-        mFragmentTabHost.getTabWidget().setDividerDrawable(R.color.transparent);
+
     }
 
-    private View getTabItemView(int position) {
-        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.tab_item_view, null);
-        ImageView imageView = (ImageView) view.findViewById(R.id.tab_item_imageView);
-        TextView textView = (TextView) view.findViewById(R.id.tab_item_textView);
-        imageView.setBackgroundResource(images[position]);
-        textView.setText(titles[position]);
-        return view;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            long time = System.currentTimeMillis();
+            if (time - firstExitime >= 2000) {
+                MyToast.showToast("再按一次退出");
+                firstExitime = time;
+            } else {
+                finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

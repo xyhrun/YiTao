@@ -67,6 +67,7 @@ public class TfaccountFragment extends Fragment implements BaseAdapter.OnItemCli
         View view = inflater.from(container.getContext()).inflate(R.layout.fragment_tfaccount, container, false);
         ButterKnife.bind(this, view);
         mCartProvider = new CartProvider(getActivity());
+        Log.i(TAG, "-------------onCreateView: 执行了");
         getData();
         RefreshEvent();
         return view;

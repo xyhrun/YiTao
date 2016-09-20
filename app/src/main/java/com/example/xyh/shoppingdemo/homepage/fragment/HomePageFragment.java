@@ -64,9 +64,16 @@ public class HomePageFragment extends Fragment implements IFragmentView, View.On
         View view = inflater.from(container.getContext()).inflate(R.layout.fragment_homepage, container, false);
         ButterKnife.bind(this, view);
         mSearch.setOnTouchListener(this);
+        Log.i(TAG, "-------------onCreateView: 执行了");
         initView();
         initData();
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.i(TAG, "----------onActivityCreated: ");
     }
 
     private void recyclerViewData() {
@@ -164,5 +171,17 @@ public class HomePageFragment extends Fragment implements IFragmentView, View.On
     @Override
     public void onItemClick(int position) {
         MyToast.showToast("点击第" + (position + 1) + "项");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "----------------onDestroy: ");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i(TAG, "----------onDestroyView: ");
     }
 }

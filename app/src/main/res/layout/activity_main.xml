@@ -13,10 +13,86 @@
        android:layout_width="match_parent"
        android:layout_height="0dp"></android.support.v4.view.ViewPager>
 
-    <android.support.v4.app.FragmentTabHost
-        android:id="@+id/main_fragmentTabHost"
-        android:background="@color/white1"
+    <!--<android.support.v4.app.FragmentTabHost-->
+        <!--android:id="@+id/main_fragmentTabHost"-->
+        <!--android:background="@color/white1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+    <!--</android.support.v4.app.FragmentTabHost>-->
+
+    <!--底部按钮-->
+
+    <RadioGroup
+        android:id="@+id/radiogroup_id"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </android.support.v4.app.FragmentTabHost>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/guide_homepage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawablePadding="2dp"
+            android:drawableTop="@drawable/selector_guide_homepage"
+            android:gravity="center"
+            android:text="首页"
+            android:textColor="@drawable/selector_text_color" />
+
+        <RadioButton
+            android:id="@+id/guide_tfaccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:drawablePadding="2dp"
+            android:drawableTop="@drawable/selector_guide_tfaccount"
+            android:gravity="center"
+            android:text="微淘"
+            android:textColor="@drawable/selector_text_color" />
+
+
+        <RadioButton
+            android:id="@+id/guide_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/selector_guide_category"
+            android:gravity="center"
+            android:text="分类"
+            android:textColor="@drawable/selector_text_color" />
+
+        <RadioButton
+            android:id="@+id/guide_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:drawablePadding="2dp"
+            android:drawableTop="@drawable/selector_guide_cart"
+            android:gravity="center"
+            android:text="购物车"
+            android:textColor="@drawable/selector_text_color" />
+
+        <RadioButton
+            android:id="@+id/guide_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:drawablePadding="2dp"
+            android:drawableTop="@drawable/selector_guide_account"
+            android:gravity="center"
+            android:text="我的淘宝"
+            android:textColor="@drawable/selector_text_color" />
+    </RadioGroup>
 </LinearLayout>
