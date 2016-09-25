@@ -63,7 +63,6 @@ private static final String TAG = "BaseAdapter";
 
     @Override
     public int getItemCount() {
-//        Log.i(TAG, "getItemCount: "+mDatas.size());
         return mDatas == null ? 0 : mDatas.size();
     }
 

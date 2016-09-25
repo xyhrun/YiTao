@@ -17,8 +17,7 @@
     <ImageView android:id="@+id/cart_item_truckImage"
         android:layout_width="110dp"
         android:layout_height="120dp"
-        android:clickable="false"
-        android:background="@mipmap/ic_launcher"/>
+        android:clickable="false" />
 
     <RelativeLayout
         android:layout_width="0dp"

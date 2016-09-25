@@ -19,10 +19,11 @@ import java.util.List;
 public class CartProvider {
     private static final String TAG = "CartProvider";
 
-    public SparseArray<ShoppingCart> mDatas = null;
+    public static SparseArray<ShoppingCart> mDatas = null;
     public Context mContext;
     public Gson gson;
     public static final String CART_JSON = "cart_json";
+
     public CartProvider(Context mContext) {
         this.mContext = mContext;
         mDatas = new SparseArray<>(10);
@@ -38,8 +39,6 @@ public class CartProvider {
 
     //增删改
     public void put(ShoppingCart shoppingCart) {
-
-
         ShoppingCart temp = mDatas.get(shoppingCart.getId());
 
         if (temp != null) {
@@ -49,20 +48,25 @@ public class CartProvider {
             temp.setCount(1);
         }
 
+        Log.i(TAG, "put: 添加数据前还有" + mDatas.size());
         mDatas.put(shoppingCart.getId(), temp);
-
+        Log.i(TAG, "put: 添加数据后还有" + mDatas.size());
         commit();
     }
 
     public void delete(ShoppingCart shoppingCart) {
-        Log.i(TAG, "delete: id = "+shoppingCart.getId());
+        Log.i(TAG, "delete: id = " + shoppingCart.getId());
+        Log.i(TAG, "delete: 删除前还有" + mDatas.size());
         mDatas.delete(shoppingCart.getId());
-        Log.i(TAG, "delete: 删除后还有"+mDatas.size());
+//        mDatas.delete(1);
+        Log.i(TAG, "delete: 删除后还有" + mDatas.size());
         commit();
     }
 
     public void update(ShoppingCart shoppingCart) {
+        Log.i(TAG, "update: 更新前数据" + mDatas.size());
         mDatas.put(shoppingCart.getId(), shoppingCart);
+        Log.i(TAG, "update: 更新后数据" + mDatas.size());
         commit();
     }
 
@@ -78,26 +82,24 @@ public class CartProvider {
     }
 
     public List<ShoppingCart> sparseToList() {
-        Log.i(TAG, "sparseToList: "+mDatas.size());
-
-        if (mDatas != null && mDatas.size() > 0) {
-            int size = mDatas.size();
-            List<ShoppingCart> shoppingCarts = new ArrayList<>(size);
-            for (int i = 0; i < size; i++) {
-                shoppingCarts.add(mDatas.valueAt(i));
-            }
-            return shoppingCarts;
+        Log.i(TAG, "sparseToList: " + mDatas.size());
+        int size = mDatas.size();
+        List<ShoppingCart> shoppingCarts = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            shoppingCarts.add(mDatas.valueAt(i));
         }
-        return null;
+        Log.i(TAG, "sparseToList: shoppingCarts = " + shoppingCarts.size());
+        return shoppingCarts;
     }
 
     public void listToSparse() {
         List<ShoppingCart> carts = getDataFromLocal();
         if (carts != null && carts.size() > 0) {
-            for (ShoppingCart shoppingCart: carts) {
+            for (ShoppingCart shoppingCart : carts) {
                 mDatas.put(shoppingCart.getId(), shoppingCart);
             }
         }
+        Log.i(TAG, "listToSparse: 从本地获取后mDatas.size"+mDatas.size());
     }
 
     public List<ShoppingCart> getDataFromLocal() {

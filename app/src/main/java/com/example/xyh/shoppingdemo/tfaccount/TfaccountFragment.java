@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
@@ -67,7 +68,6 @@ public class TfaccountFragment extends Fragment implements BaseAdapter.OnItemCli
         View view = inflater.from(container.getContext()).inflate(R.layout.fragment_tfaccount, container, false);
         ButterKnife.bind(this, view);
         mCartProvider = new CartProvider(getActivity());
-        Log.i(TAG, "-------------onCreateView: 执行了");
         getData();
         RefreshEvent();
         return view;
@@ -77,7 +77,6 @@ public class TfaccountFragment extends Fragment implements BaseAdapter.OnItemCli
         mMaterialRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
-//                Log.i(TAG, "onRefresh: 刷新");
                 curPage = 1;
                 state = STATE_REFRESH;
                 getData();
@@ -91,14 +90,11 @@ public class TfaccountFragment extends Fragment implements BaseAdapter.OnItemCli
                     state = STATE_LOADMORE;
                     getData();
                 } else {
-                    MyToast.showToast("无更多数据");
+//                    Toast.makeText(getActivity(), "无更多数据", Toast.LENGTH_SHORT).show();
                     mMaterialRefreshLayout.finishRefreshLoadMore();
                 }
             }
         });
-//       要关闭刷新动画
-        mMaterialRefreshLayout.finishRefresh();
-        mMaterialRefreshLayout.finishRefreshLoadMore();
     }
 
 
@@ -152,12 +148,10 @@ public class TfaccountFragment extends Fragment implements BaseAdapter.OnItemCli
        List<TruckBean> truckBeanList =  mTfaccountAdapter.getDatas();
         TruckBean truckBean = truckBeanList.get(position);
         Log.i(TAG, "onClick: position = "+position);
-        Log.i(TAG, "onClick: 商品个数~~~~~~~~~~~~~~"+truckBeanList.size());
         switch (v.getId()) {
             case R.id.tfaccount_truckBuy:
-                Log.i(TAG, "onClick: truckBean = "+truckBean);
                 mCartProvider.put(truckBean);
-                MyToast.showToast("已加入购物车");
+                Toast.makeText(getActivity(), "已加入购物车", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 Intent intent = new Intent(getActivity(), TruckDetailActivity.class);

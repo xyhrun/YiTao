@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.xyh.shoppingdemo.R;
@@ -15,12 +14,13 @@ import com.example.xyh.shoppingdemo.cart.model.ShoppingCart;
 import com.example.xyh.shoppingdemo.widget.NumberAddSubView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * Created by xyh on 2016/9/16.
  */
-public class CartAdapter extends BaseAdapter<ShoppingCart, BaseViewHolder> implements BaseAdapter.OnItemClickListener, CompoundButton.OnCheckedChangeListener {
+public class CartAdapter extends BaseAdapter<ShoppingCart, BaseViewHolder> implements BaseAdapter.OnItemClickListener, View.OnClickListener {
     private static final String TAG = "CartAdapter";
     private CartProvider mCartProvider;
     private CheckBox mSelectedAll;
@@ -33,6 +33,7 @@ public class CartAdapter extends BaseAdapter<ShoppingCart, BaseViewHolder> imple
         this.mSelectedAll = checkBox;
         this.mTotoalPrice = totoalPrice;
         setOnItemClickListener(this);
+        mSelectedAll.setOnClickListener(this);
     }
 
     @Override
@@ -62,8 +63,6 @@ public class CartAdapter extends BaseAdapter<ShoppingCart, BaseViewHolder> imple
             }
         });
 
-        mSelectedAll.setOnCheckedChangeListener(this);
-
     }
 
     public void setTotalPrice() {
@@ -85,36 +84,26 @@ public class CartAdapter extends BaseAdapter<ShoppingCart, BaseViewHolder> imple
     }
 
     public void clearData() {
-        if (mDatas != null && mDatas.size() > 0) {
+        if (notEmpty()) {
             mDatas.clear();
             notifyDataSetChanged();
         }
-//        for (Iterator it = mDatas.iterator(); it.hasNext(); ) {
-//
-//            ShoppingCart t = (ShoppingCart) it.next();
-//            int position = mDatas.indexOf(t);
-//            it.remove();
-//            notifyItemRemoved(position);
-//        }
     }
 
 
     //刷新数据
     public void refreshData(List<ShoppingCart> shoppingCartList) {
         clearData();
-        Log.i(TAG, "refreshData: 删除后还有几条" + shoppingCartList.size());
+        Log.i(TAG, "refreshData: 刷新后还有几条" + shoppingCartList.size());
         if (shoppingCartList.size() > 0) {
             for (ShoppingCart shoppingCart : shoppingCartList) {
                 if (mDatas == null) {
                     mDatas = new ArrayList<>();
                 }
                 mDatas.add(0, shoppingCart);
-                Log.i(TAG, "refreshData: id = " + shoppingCart.getId() + shoppingCart.getName());
-
             }
         }
-        notifyDataSetChanged();
-
+        notifyItemRangeChanged(0, shoppingCartList.size());
     }
 
     @Override
@@ -123,36 +112,71 @@ public class CartAdapter extends BaseAdapter<ShoppingCart, BaseViewHolder> imple
         shoppingCart.setChecked(!shoppingCart.isChecked());
         mCartProvider.update(shoppingCart);
         notifyItemChanged(position);
+        checkListen();
         setTotalPrice();
     }
 
-    private void checkAllEvent(boolean isChecked) {
-        if (getItemCount() == 0) {
+    private void checkListen() {
+        int count = 0;
+        int checkNum = 0;
+        if (mDatas != null) {
+            count = mDatas.size();
+
+            for (ShoppingCart cart : mDatas) {
+                if (!cart.isChecked()) {
+                    mSelectedAll.setChecked(false);
+                    break;
+                } else {
+                    checkNum++;
+                }
+            }
+
+            if (count == checkNum) {
+                mSelectedAll.setChecked(true);
+            }
+        }
+    }
+
+
+    public void checkAll_None(boolean isChecked) {
+        if (!notEmpty()) {
             return;
         }
 
-        if (isChecked) {
-            for (ShoppingCart shoppingCart : mDatas) {
-                if (!shoppingCart.isChecked()) {
-                    shoppingCart.setChecked(true);
-                    mCartProvider.update(shoppingCart);
-                }
-
-            }
-        } else {
-            for (ShoppingCart shoppingCart : mDatas) {
-                if (shoppingCart.isChecked()) {
-                    shoppingCart.setChecked(false);
-                    mCartProvider.update(shoppingCart);
-                }
-            }
+        for (int i = 0; i < mDatas.size(); i++) {
+            ShoppingCart cart = mDatas.get(i);
+            cart.setChecked(isChecked);
+            mCartProvider.update(cart);
         }
         notifyDataSetChanged();
         setTotalPrice();
     }
 
+    private boolean notEmpty() {
+        return (mDatas != null && mDatas.size() > 0);
+    }
+
+    public void delCart() {
+        if (!notEmpty())
+            return;
+
+        for (Iterator iterator = mDatas.iterator(); iterator.hasNext(); ) {
+
+            ShoppingCart cart = (ShoppingCart) iterator.next();
+            if (cart.isChecked()) {
+                int position = mDatas.indexOf(cart);
+                mCartProvider.delete(cart);
+                iterator.remove();
+                notifyItemRemoved(position);
+            }
+
+        }
+
+        setTotalPrice();
+    }
+
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        checkAllEvent(isChecked);
+    public void onClick(View v) {
+        checkAll_None(mSelectedAll.isChecked());
     }
 }

@@ -145,6 +145,22 @@ public class MyToolBar extends Toolbar {
 
     }
 
+    public ImageButton getLeftBtn() {
+        if (mLeftBtn == null) {
+            initView();
+        }
+
+        return mLeftBtn;
+    }
+
+    public ImageButton getRightBtn() {
+        if (mRightBtn == null) {
+            initView();
+        }
+
+        return mRightBtn;
+    }
+
     public void showTitleView() {
         mTitle.setVisibility(VISIBLE);
     }

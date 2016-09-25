@@ -52,21 +52,23 @@ public class CartFragment extends Fragment implements View.OnClickListener {
     private CartProvider mCartProvider;
     private CartAdapter mCartAdapter;
     private List<ShoppingCart> shoppingCarts;
+    private static final int CART_EDIT = 1;
+    private static final int CART_COMPLETE = 2;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.from(container.getContext()).inflate(R.layout.fragment_cart, container, false);
         ButterKnife.bind(this, view);
+        mCartProvider = new CartProvider(getActivity());
+        initToolBar();
         showData();
         Log.i(TAG, "-------------onCreateView: 执行了");
-        mMyToolBar.setRightIconClickListener(this);
         mDel.setOnClickListener(this);
         return view;
     }
 
     private void showData() {
-        mCartProvider = new CartProvider(getActivity());
         shoppingCarts = mCartProvider.getAll();
 //        Log.i(TAG, "showData: 添加到购物车的数量为 = "+shoppingCarts.size());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -79,11 +81,12 @@ public class CartFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        refreshData();
     }
 
-
     public void refreshData() {
+        if (mCartProvider == null) {
+            mCartProvider = new CartProvider(getActivity());
+        }
         shoppingCarts = mCartProvider.getAll();
 
         if (shoppingCarts == null) {
@@ -95,48 +98,49 @@ public class CartFragment extends Fragment implements View.OnClickListener {
         mCartAdapter.setTotalPrice();
     }
 
+    public void initToolBar() {
+        Drawable drawable = this.getResources().getDrawable(R.mipmap.edit);
+        mMyToolBar.setRightIcon(drawable);
+        mMyToolBar.getRightBtn().setTag(CART_EDIT);
+        mMyToolBar.getRightBtn().setOnClickListener(this);
+    }
+
+    public void showCompleteControl() {
+        mPay.setVisibility(View.GONE);
+        mDel.setVisibility(View.VISIBLE);
+
+        Drawable drawable = this.getResources().getDrawable(R.mipmap.complete);
+        mMyToolBar.setRightIcon(drawable);
+        mMyToolBar.getRightBtn().setTag(CART_COMPLETE);
+        mMyToolBar.getRightBtn().setOnClickListener(this);
+        mCheckBox.setChecked(false);
+        mCartAdapter.checkAll_None(false);
+    }
+
+    public void hideCompleteControl() {
+        mDel.setVisibility(View.GONE);
+        mPay.setVisibility(View.VISIBLE);
+
+        initToolBar();
+        mCheckBox.setChecked(true);
+        mCartAdapter.checkAll_None(true);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.homepage_rightIcon:
-                if (mCartPayInfo.getVisibility() == View.VISIBLE) {
-                    Drawable drawable = this.getResources().getDrawable(R.mipmap.complete);
-                    mMyToolBar.setRightIcon(drawable);
-                    mCartPayInfo.setVisibility(View.GONE);
-                    mPay.setVisibility(View.GONE);
-                    mDel.setVisibility(View.VISIBLE);
-
-                    for (ShoppingCart shoppingCart : shoppingCarts) {
-                        shoppingCart.setChecked(false);
-                    }
-                    mCartAdapter.refreshData(shoppingCarts);
-                    mCartAdapter.setTotalPrice();
-                } else {
-                    Drawable drawable = this.getResources().getDrawable(R.mipmap.edit);
-                    mMyToolBar.setRightIcon(drawable);
-                    mDel.setVisibility(View.GONE);
-                    mCartPayInfo.setVisibility(View.VISIBLE);
-                    mPay.setVisibility(View.VISIBLE);
-
-                    for (ShoppingCart shoppingCart : shoppingCarts) {
-                        shoppingCart.setChecked(true);
-                    }
-                    mCartAdapter.refreshData(shoppingCarts);
-                    mCartAdapter.setTotalPrice();
-                }
-                break;
             case R.id.cart_del:
+                mCartAdapter.delCart();
                 Log.i(TAG, "onClick: 当前的商品个数为="+shoppingCarts.size());
-                for (ShoppingCart shoppingCart : shoppingCarts) {
-                    Log.i(TAG, "onClick: 是否被选中删除"+shoppingCart.isChecked());
-                    if (shoppingCart.isChecked()) {
-                        mCartProvider.delete(shoppingCart);
-                        Log.i(TAG, "onClick: 删除"+shoppingCart.isChecked());
-                    }
-                }
-                refreshData();
                 break;
             default:
+                int action = (int) v.getTag();
+                if(CART_EDIT == action){
+                    showCompleteControl();
+                }
+                else if(CART_COMPLETE == action){
+                    hideCompleteControl();
+                }
                 break;
         }
 

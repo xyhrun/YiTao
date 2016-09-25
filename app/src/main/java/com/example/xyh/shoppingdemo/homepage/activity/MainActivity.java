@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPagerAdapter mViewPagerAdapter;
     private CartFragment cartFragment;
     private long firstExitime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.guide_cart:
                         mViewPager.setCurrentItem(3);
+                        cartFragment.refreshData();
                         break;
                     case R.id.guide_account:
                         mViewPager.setCurrentItem(4);
@@ -91,23 +93,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void refreshData(String tabId) {
-        if (cartFragment == null) {
-            Fragment cart = (CartFragment) getSupportFragmentManager().findFragmentByTag(tabId);
-            if (cart != null) {
-                cartFragment = (CartFragment) cart;
-            }
-        }
-        cartFragment.refreshData();
-
-    }
-
     private void initData() {
         fragmentList = new ArrayList<>();
         HomePageFragment homePageFragment = new HomePageFragment();
         TfaccountFragment tfaccountFragment = new TfaccountFragment();
         CategoryFragment categoryFragment = new CategoryFragment();
-        CartFragment cartFragment = new CartFragment();
+        cartFragment = new CartFragment();
         AccountFragment accountFragment = new AccountFragment();
         fragmentList.add(homePageFragment);
         fragmentList.add(tfaccountFragment);
